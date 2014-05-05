@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+require "rubygems"
+require "thor"
+require "collateral"
+require "collateral/commands"
+
+module Collateral
+  class Command < Thor
+
+    desc "project NAME [PIPELINE1[ PIPELINE2]]", "Generate a new project using collateral"
+    def project(name, *pipelines)
+       Collateral::Commands::ProjectGenerator.new([name, pipelines]).invoke_all
+    end
+
+    desc "pipeline PIPELINE", "Generate a new pipeline inside a project using collateral"
+    method_options type: :string
+    def pipeline(name)
+
+    end
+  end
+end
+
+
+Collateral::Command.start

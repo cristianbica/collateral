@@ -10,19 +10,18 @@ require "collateral/commands"
 
 module Collateral
   class Command < Thor
-
-    desc "project NAME [PIPELINE1[ PIPELINE2]]", "Generate a new project using collateral"
-    def project(name, *pipelines)
-       Collateral::Commands::ProjectGenerator.new([name, pipelines]).invoke_all
+    desc "project NAME", "Generate a new project using collateral"
+    method_options force: false
+    def project(name)
+      Collateral::Commands::ProjectGenerator.new([name], options).invoke_all
     end
 
-    desc "pipeline PIPELINE", "Generate a new pipeline inside a project using collateral"
-    method_options type: :string
-    def pipeline(name)
-
+    desc "pipeline PIPELINE [ACTION1[ ACTION2]]", "Generate a new pipeline inside a project using collateral"
+    method_options force: false
+    def pipeline(name, *actions)
+      Collateral::Commands::PipelineGenerator.new([name, actions], options).invoke_all
     end
   end
 end
-
 
 Collateral::Command.start

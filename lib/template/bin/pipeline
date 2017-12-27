@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require File.expand_path("../../boot.rb",__FILE__)
+require "thor"
+require "<%= snake_name %>"
+
+class <%= camel_name %>Command < Thor
+  desc "import ARG", "Description ..."
+  def import(*args)
+     <%= camel_name %>.new(args).start
+  end
+end
+
+<%= camel_name %>Command.start

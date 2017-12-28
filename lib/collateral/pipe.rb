@@ -24,12 +24,12 @@ module Collateral
 
       bmr = Benchmark.measure do
 
-        bar = ProgressBar.new("Processing", batches.size) if @options[:progress]
+        bar = ProgressBar.create(title: "Processing", total: batches.size) if @options[:progress]
         result = Parallel.map(batches, :in_threads => @options[:workers],
           :start  => ->(item,index) { logger.debug "Start: #{index.inspect}" },
           :finish => ->(item,index, result) {
             logger.debug "Finish: #{index.inspect}"
-            bar.inc if @options[:progress]
+            bar.increment if @options[:progress]
         }) do |batch|
           batch.compact.map do |data|
             perform(data)

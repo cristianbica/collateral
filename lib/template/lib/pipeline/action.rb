@@ -5,6 +5,10 @@ require "collateral/pipe"
 class <%= camel_name %>::<%= config[:action].classify %> < Collateral::Pipe
   delegate :redis, to: <%= camel_name %>
 
+  def description
+    "<%= config[:action].humanize %>"
+  end
+
   def perform(record)
     # process one record at a time (possible in parallel)
   end
